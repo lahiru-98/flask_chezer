@@ -3,7 +3,6 @@ from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from dotenv import load_dotenv
 import os
-from google.oauth2 import ServiceAccountCredentials
 import json
 
 app = Flask(__name__)
