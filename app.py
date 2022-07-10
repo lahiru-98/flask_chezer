@@ -28,6 +28,14 @@ def insert_row_fer(data_list):
     response = request.execute()
     return response
 
+
+def insert_row_fee(data_list):
+    data = [data_list]
+    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Expression!A1:N1",
+         valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
+    response = request.execute()
+    return response
+
 @app.route('/')
 def index():
     return "Your App is Working"
@@ -38,9 +46,12 @@ def get_data():
     res = read_sheet()
     return str(res)
 
-
+''''
+Following API Endpoint will be used to insert the Data gathered while playing the Emotion Recognition Game
+Request Body - Form Data
+'''
 @app.route('/post' ,  methods=['POST'])
-def insert_new_row():
+def save_fer():
     id = request.form['id']
     player_id = request.form['playerId']
     date = request.form['date']
@@ -58,6 +69,35 @@ def insert_new_row():
     res = insert_row_fer(fer_data)
 
     return str(res)
+
+''''
+Following API Endpoint will be used to insert the Data gathered while playing the Emotion Expression Game
+Request Body - Form Data
+'''
+@app.route('/fee' , methods=['POST'])
+def save_fee():
+    id = request.form['id']
+    player_id = request.form['playerId']
+    date = request.form['date']
+    time = request.form['time']
+    age = request.form['age']
+    gender = request.form['gender']
+    hasAnyDisability = request.form['hasAnyDisability']
+    disabilityName = request.form['disabilityName']
+    level = request.form['level']
+    emotion = request.form['emotion']
+    timeTaken = request.form['timeTaken']
+    wrongAttempts = request.form['wrongAttempts']
+    arousal = request.form['arousal']
+    valence = request.form['valence']
+
+    fee_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName ,
+             level , emotion , timeTaken , wrongAttempts, arousal , valence]
+
+    res = insert_row_fee(fee_data)
+
+    return str(res)
+
 
 if __name__ == "__main__":
     app.run()
