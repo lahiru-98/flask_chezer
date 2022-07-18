@@ -2,8 +2,8 @@ from flask import Flask , request
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from dotenv import load_dotenv
-import os
-import json
+
+
 
 app = Flask(__name__)
 
@@ -23,7 +23,7 @@ def read_sheet():
 
 def insert_row_fer(data_list):
     data = [data_list]
-    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:P1",
+    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:T1",
          valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
     response = request.execute()
     return response
@@ -35,6 +35,29 @@ def insert_row_fee(data_list):
          valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
     response = request.execute()
     return response
+
+def getAnswersList(givenAnswers):
+    givenAnswersList  = givenAnswers.split(",")
+    arrlen = len(givenAnswersList)
+    returnlist = []
+    for i in range(0,4):
+        if i<arrlen:
+            returnlist.append(givenAnswersList[i])
+        else:
+            returnlist.append(" ")
+    return returnlist
+
+def getAnsweredTimesList(answerGivenTimes):
+    answerGivenTimesList = answerGivenTimes.split(",")
+    arrlen = len(answerGivenTimesList)
+    returnlist = []
+    for i in range(0,4):
+        if i<arrlen:
+            returnlist.append(answerGivenTimesList[i])
+        else:
+            returnlist.append("0")
+    return returnlist
+
 
 @app.route('/')
 def index():
@@ -66,11 +89,17 @@ def save_fer():
     wrongAttempts = request.form['wrongAttempts']
     givenAnswers = request.form['givenAnswers']
     answerGivenTimes = request.form['answerGivenTimes']
+
+    givenAnswersList = getAnswersList(givenAnswers)
+    answerGivenTimesList = getAnsweredTimesList(answerGivenTimes)
     
+    print("**** - ",givenAnswersList, givenAnswersList[0])
+
     fer_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName , 
                 level , emotion , timeTaken , wrongAttempts,
-                givenAnswers[0], givenAnswers[1], givenAnswers[2], givenAnswers[3]]
-                
+                givenAnswersList[0], givenAnswersList[1], givenAnswersList[2], givenAnswersList[3],
+                answerGivenTimesList[0], answerGivenTimesList[1], answerGivenTimesList[2], answerGivenTimesList[3]]
+
     res = insert_row_fer(fer_data)
 
     return str(res)
