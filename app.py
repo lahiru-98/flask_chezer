@@ -23,7 +23,7 @@ def read_sheet():
 
 def insert_row_fer(data_list):
     data = [data_list]
-    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:L1",
+    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:P1",
          valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
     response = request.execute()
     return response
@@ -50,7 +50,7 @@ def get_data():
 Following API Endpoint will be used to insert the Data gathered while playing the Emotion Recognition Game
 Request Body - Form Data
 '''
-@app.route('/post' ,  methods=['POST'])
+@app.route('/fer' ,  methods=['POST'])
 def save_fer():
     id = request.form['id']
     player_id = request.form['playerId']
@@ -64,8 +64,13 @@ def save_fer():
     emotion = request.form['emotion']
     timeTaken = request.form['timeTaken']
     wrongAttempts = request.form['wrongAttempts']
+    givenAnswers = request.form['givenAnswers']
+    answerGivenTimes = request.form['answerGivenTimes']
     
-    fer_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName , level , emotion , timeTaken , wrongAttempts]
+    fer_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName , 
+                level , emotion , timeTaken , wrongAttempts,
+                givenAnswers[0], givenAnswers[1], givenAnswers[2], givenAnswers[3]]
+                
     res = insert_row_fer(fer_data)
 
     return str(res)
