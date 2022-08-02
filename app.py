@@ -31,7 +31,7 @@ def insert_row_fer(data_list):
 
 def insert_row_fee(data_list):
     data = [data_list]
-    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Expression!A1:N1",
+    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Expression!A1:O1",
          valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
     response = request.execute()
     return response
@@ -119,14 +119,15 @@ def save_fee():
     hasAnyDisability = request.form['hasAnyDisability']
     disabilityName = request.form['disabilityName']
     level = request.form['level']
-    emotion = request.form['emotion']
+    expectEdemotion = request.form['expectEdemotion']
+    expressedEmotion = request.form['expressedEmotion'] 
     timeTaken = request.form['timeTaken']
-    wrongAttempts = request.form['wrongAttempts']
     arousal = request.form['arousal']
     valence = request.form['valence']
+    emotionLevel = request.form['wrongAttempts']
 
     fee_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName ,
-             level , emotion , timeTaken , wrongAttempts, arousal , valence]
+             level , expectEdemotion ,expressedEmotion, timeTaken , arousal , valence , emotionLevel]
 
     res = insert_row_fee(fee_data)
 
