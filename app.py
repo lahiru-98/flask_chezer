@@ -124,7 +124,7 @@ def save_fee():
     timeTaken = request.form['timeTaken']
     arousal = request.form['arousal']
     valence = request.form['valence']
-    emotionLevel = request.form['wrongAttempts']
+    emotionLevel = request.form['emotionLevel']
 
     fee_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName ,
              level , expectEdemotion ,expressedEmotion, timeTaken , arousal , valence , emotionLevel]
