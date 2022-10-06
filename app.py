@@ -133,7 +133,7 @@ def save_fee():
     emotionLevel = request.form['emotionLevel']
 
     fee_data = [id, player_id , date, time , age , gender , hasAnyDisability , disabilityName ,
-             level , expectEdemotion ,expressedEmotion, timeTaken , arousal , valence , emotionLevel]
+             level , expectEdemotion ,expressedEmotion, startTime, endTime, timeTaken , arousal , valence , emotionLevel]
 
     res = insert_row_fee(fee_data)
 
