@@ -15,7 +15,7 @@ service = build('sheets', 'v4', credentials=creds)
 sheet = service.spreadsheets()
 
 def read_sheet():
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="Sheet1!A1:C3").execute()
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="Analysis!A1:D3").execute()
     values = result.get('values', [])
     return values
 
@@ -29,7 +29,7 @@ def insert_row_fer(data_list):
 
 def insert_row_fee(data_list):
     data = [data_list]
-    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Expression!A1:O1",
+    request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Expression!A1:Q1",
          valueInputOption="USER_ENTERED", insertDataOption="INSERT_ROWS", body={"values" : data})
     response = request.execute()
     return response
@@ -55,6 +55,12 @@ def getAnsweredTimesList(answerGivenTimes):
         else:
             returnlist.append("0")
     return returnlist
+
+
+#A Function to Read the Analysis Results
+def get_analysis_results():
+    pass
+
 
 
 @app.route('/')
@@ -119,6 +125,8 @@ def save_fee():
     level = request.form['level']
     expectEdemotion = request.form['expectEdemotion']
     expressedEmotion = request.form['expressedEmotion'] 
+    startTime = request.form['startTime'] 
+    endTime = request.form['endTime'] 
     timeTaken = request.form['timeTaken']
     arousal = request.form['arousal']
     valence = request.form['valence']
