@@ -59,7 +59,24 @@ def getAnsweredTimesList(answerGivenTimes):
 
 #A Function to Read the Analysis Results
 def get_analysis_results():
-    pass
+    res_array = read_sheet()
+    #key_arr = res_array[0]
+
+    return_dic = {
+        'timestamp': [],
+        'Emotion Level':[],
+        'Valence':[],
+        'Arousal':[]
+    }
+
+    for i in range(1, len(res_array)):
+        arr = res_array[i]
+        return_dic['timestamp'].append(arr[0])
+        return_dic['Emotion Level'].append(arr[1])
+        return_dic['Valence'].append(arr[2])
+        return_dic['Arousal'].append(arr[3])
+    
+    return return_dic
 
 
 
@@ -70,7 +87,7 @@ def index():
 
 @app.route("/getdata")
 def get_data():
-    res = read_sheet()
+    res = get_analysis_results()
     return str(res)
 
 ''''
