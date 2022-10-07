@@ -2,6 +2,7 @@ from flask import Flask , request
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from dotenv import load_dotenv
+import json
 
 app = Flask(__name__)
 
@@ -88,7 +89,8 @@ def index():
 @app.route("/getdata")
 def get_data():
     res = get_analysis_results()
-    return str(res)
+    jsonStr = json.dumps(res)
+    return {"result" : jsonStr}
 
 ''''
 Following API Endpoint will be used to insert the Data gathered while playing the Emotion Recognition Game
