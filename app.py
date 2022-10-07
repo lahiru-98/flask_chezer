@@ -20,6 +20,11 @@ def read_sheet():
     values = result.get('values', [])
     return values
 
+def read_EmoLevelPi():
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="EmoLevelPi!A1:B4").execute()
+    values = result.get('values', [])
+    return values
+
 def insert_row_fer(data_list):
     data = [data_list]
     request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:T1",
@@ -80,6 +85,25 @@ def get_analysis_results():
     return return_dic
 
 
+def get_EmoLevelPi():
+    res_array = read_EmoLevelPi()
+    return_dic = {
+        'Emotion Level':[],
+        'Percentage':[]
+    }
+
+    for i in range(1, len(res_array)):
+        arr = res_array[i]
+        return_dic['Emotion Level'].append(arr[1])
+        return_dic['Percentage'].append(arr[1])
+      
+    return return_dic
+
+
+
+
+
+
 
 @app.route('/')
 def index():
@@ -89,6 +113,12 @@ def index():
 @app.route("/getdata")
 def get_data():
     res = get_analysis_results()
+    jsonStr = json.dumps(res)
+    return {"result" : jsonStr}
+
+@app.route("/EmoLevelPi")
+def get_emotion_level_pi_data():
+    res = get_EmoLevelPi()
     jsonStr = json.dumps(res)
     return {"result" : jsonStr}
 
