@@ -128,7 +128,7 @@ def get_AULabel():
     res_array = read_AULabel()
     return_dic = {
         'AULabel':[],
-        'VisibilityPercentage':[]
+        'Activation':[]
     }
 
     for i in range(1, len(res_array)):
