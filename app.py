@@ -115,7 +115,8 @@ def get_VisibilityPercentage():
         arr = res_array[i]
         return_dic['Emotion'].append(arr[0])
         return_dic['VisibilityPercentage'].append(int(arr[1]))
-
+        
+    return return_dic
 
 
 
