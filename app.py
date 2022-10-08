@@ -30,6 +30,12 @@ def read_VisibilityPercentage():
     values = result.get('values', [])
     return values
 
+#AULabel
+def read_AULabel():
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="AULabel!A1:B15").execute()
+    values = result.get('values', [])
+    return values
+
 def insert_row_fer(data_list):
     data = [data_list]
     request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:T1",
@@ -115,7 +121,21 @@ def get_VisibilityPercentage():
         arr = res_array[i]
         return_dic['Emotion'].append(arr[0])
         return_dic['VisibilityPercentage'].append(int(arr[1]))
-        
+
+    return return_dic
+
+def get_AULabel():
+    res_array = read_AULabel()
+    return_dic = {
+        'AULabel':[],
+        'VisibilityPercentage':[]
+    }
+
+    for i in range(1, len(res_array)):
+        arr = res_array[i]
+        return_dic['AULabel'].append(arr[0])
+        return_dic['Activation'].append(int(arr[1]))
+
     return return_dic
 
 
@@ -145,6 +165,15 @@ def get_VisibilityPercen():
     res = get_VisibilityPercentage()
     jsonStr = json.dumps(res)
     return {"result" : jsonStr}
+
+#AULabel
+@app.route("/AULabel")
+def get_VisibilityPercen():
+    res = get_VisibilityPercentage()
+    jsonStr = json.dumps(res)
+    return {"result" : jsonStr}
+
+
 
 ''''
 Following API Endpoint will be used to insert the Data gathered while playing the Emotion Recognition Game
