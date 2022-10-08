@@ -168,8 +168,8 @@ def get_VisibilityPercen():
 
 #AULabel
 @app.route("/AULabel")
-def get_VisibilityPercen():
-    res = get_VisibilityPercentage()
+def get_Labels_Au():
+    res = get_AULabel()
     jsonStr = json.dumps(res)
     return {"result" : jsonStr}
 
