@@ -94,8 +94,8 @@ def get_EmoLevelPi():
 
     for i in range(1, len(res_array)):
         arr = res_array[i]
-        return_dic['Emotion Level'].append(arr[0])
-        return_dic['Percentage'].append(arr[1])
+        return_dic['Emotion Level'].append(int(arr[0]))
+        return_dic['Percentage'].append(int(arr[1]))
       
     return return_dic
 
