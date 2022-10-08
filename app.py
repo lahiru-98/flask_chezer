@@ -25,6 +25,11 @@ def read_EmoLevelPi():
     values = result.get('values', [])
     return values
 
+def read_VisibilityPercentage():
+    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,range="VisibilityPercentage!A1:B8").execute()
+    values = result.get('values', [])
+    return values
+
 def insert_row_fer(data_list):
     data = [data_list]
     request = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, range="Recognition!A1:T1",
@@ -99,6 +104,17 @@ def get_EmoLevelPi():
       
     return return_dic
 
+def get_VisibilityPercentage():
+    res_array = read_VisibilityPercentage()
+    return_dic = {
+        'Emotion':[],
+        'VisibilityPercentage':[]
+    }
+
+    for i in range(1, len(res_array)):
+        arr = res_array[i]
+        return_dic['Emotion'].append(arr[0])
+        return_dic['VisibilityPercentage'].append(int(arr[1]))
 
 
 
@@ -119,6 +135,13 @@ def get_data():
 @app.route("/EmoLevelPi")
 def get_emotion_level_pi_data():
     res = get_EmoLevelPi()
+    jsonStr = json.dumps(res)
+    return {"result" : jsonStr}
+
+
+@app.route("/VisibilityPercentage")
+def get_VisibilityPercen():
+    res = get_VisibilityPercentage()
     jsonStr = json.dumps(res)
     return {"result" : jsonStr}
 
